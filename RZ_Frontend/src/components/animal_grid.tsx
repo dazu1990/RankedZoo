@@ -8,6 +8,8 @@ interface AnimalGridProps  {
 }
 
 export const AnimalGrid = ({...props}: AnimalGridProps) => {
+    console.log('aniamals', props.animals
+     )
 
     const animals = props.animals.map((animal: any, index: number) => {
         return (

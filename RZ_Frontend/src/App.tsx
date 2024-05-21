@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 // import { createBrowserHistory } from "history";
-import { getAnimals, useJwtAuth } from './hooks';
+import { useFetchAnimals, useJwtAuth, useFetchRankings } from './hooks';
 
 
 import {HomePage} from './pages/home';
@@ -26,8 +26,11 @@ const App = () => {
 
 
 
-  const animals = getAnimals()
+  const animals = useFetchAnimals();
+  const allRankings = useFetchRankings();
   console.log('animals _ data', animals)
+  console.log('rankings _ data', allRankings)
+
   const navItems = [
     {
       name: 'Home',
