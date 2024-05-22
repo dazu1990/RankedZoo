@@ -5,6 +5,7 @@ import { useFetchAnimal } from '../hooks/useFetchAnimal';
 
 interface AnimalGridProps  {
     animals: [],
+    rankings: [],
 }
 
 export const AnimalGrid = ({...props}: AnimalGridProps) => {
@@ -20,6 +21,7 @@ export const AnimalGrid = ({...props}: AnimalGridProps) => {
                     name={animal.title.rendered} 
                     description={animal.description} 
                     current_rank={animal.acf.current_rank}
+                    image={animal.acf.hero_image || null}
                     // updateRank={()=>updateRank(id, current_rank, 1, token)}
                 />
             </div>
@@ -28,11 +30,6 @@ export const AnimalGrid = ({...props}: AnimalGridProps) => {
 
     return (
         <div className="w-full flex justify-items-center flex-wrap">
-            {animals}
-            {animals}
-            {animals}
-            {animals}
-            {animals}
             {animals}
 
         </div>

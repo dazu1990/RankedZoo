@@ -57,7 +57,7 @@ const App = () => {
       <Routes>
 
           <Route path="/" element={
-            <HomePage animals={animals}></HomePage>
+            <HomePage animals={animals} rankings={allRankings}></HomePage>
           } />
           <Route path="/about" element={
             <AboutPage></AboutPage>

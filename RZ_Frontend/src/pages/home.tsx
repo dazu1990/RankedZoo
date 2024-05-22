@@ -3,9 +3,10 @@ import { AnimalGrid } from "../components/animal_grid";
 
 interface HomePageProps {
     animals: [] | null;
+    rankings: [] | null;
 }
 
-export const HomePage = ({animals} : HomePageProps) => {
+export const HomePage = ({animals, rankings} : HomePageProps) => {
 
     return(
         <div className="w-full flex items-center flex-col p-6">
@@ -18,7 +19,7 @@ export const HomePage = ({animals} : HomePageProps) => {
             )}
 
             {animals && (
-                <AnimalGrid animals={animals}/>
+                <AnimalGrid animals={animals} rankings={rankings}/>
             )}
         </div>
     )

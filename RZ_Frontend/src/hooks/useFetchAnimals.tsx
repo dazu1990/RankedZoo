@@ -8,7 +8,7 @@ export const useFetchAnimals = () => {
     const fetchAnimals = async () => {
       try {
         // const response = await axios.get('http://localhost:8889?rest_route=/animals/animals');
-        const response = await axios.get('http://localhost:8888/?rest_route=/wp/v2/animal/?acf_format=standard');
+        const response = await axios.get('http://localhost:8888/?rest_route=/wp/v2/animal/');
         setAnimals(response.data);
       } catch (error) {
         console.error(error);
