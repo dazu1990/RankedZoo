@@ -484,7 +484,109 @@
                 {
                     "param": "post_type",
                     "operator": "==",
-                    "value": "post"
+                    "value": "animal"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "acf_after_title",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "animal data",
+        "show_in_rest": 1
+    },
+    {
+        "key": "group_663df62fa1d8b",
+        "title": "Rank Change Record Data",
+        "fields": [
+            {
+                "key": "field_663df62f5470a",
+                "label": "value",
+                "name": "value",
+                "aria-label": "",
+                "type": "number",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": 1,
+                "min": -5,
+                "max": 5,
+                "placeholder": "",
+                "step": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_663df695c126a",
+                "label": "Animal",
+                "name": "animal",
+                "aria-label": "",
+                "type": "post_object",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "animal"
+                ],
+                "post_status": [
+                    "publish"
+                ],
+                "taxonomy": "",
+                "return_format": "id",
+                "multiple": 0,
+                "allow_null": 0,
+                "bidirectional": 0,
+                "ui": 1,
+                "bidirectional_target": []
+            },
+            {
+                "key": "field_663df6cc98366",
+                "label": "Matchup Animal",
+                "name": "matchup_animal",
+                "aria-label": "",
+                "type": "post_object",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "animal"
+                ],
+                "post_status": [
+                    "publish"
+                ],
+                "taxonomy": "",
+                "return_format": "id",
+                "multiple": 0,
+                "allow_null": 0,
+                "bidirectional": 0,
+                "ui": 1,
+                "bidirectional_target": []
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "rank-change-record"
                 }
             ]
         ],
@@ -495,8 +597,8 @@
         "instruction_placement": "label",
         "hide_on_screen": "",
         "active": true,
-        "description": "",
-        "show_in_rest": 0
+        "description": "record for the rank change tied to an animal",
+        "show_in_rest": 1
     },
     {
         "key": "taxonomy_663c2f00ee2a6",
@@ -507,7 +609,7 @@
         "object_type": [
             "animal"
         ],
-        "advanced_configuration": 0,
+        "advanced_configuration": 1,
         "import_source": "",
         "import_date": "",
         "labels": {
@@ -537,7 +639,7 @@
             "item_link": "Faction Link",
             "item_link_description": "A link to a faction"
         },
-        "description": "",
+        "description": "e.g. mammals, reptiles, insects",
         "capabilities": {
             "manage_terms": "manage_categories",
             "edit_terms": "manage_categories",
@@ -581,7 +683,7 @@
         "object_type": [
             "animal"
         ],
-        "advanced_configuration": 0,
+        "advanced_configuration": 1,
         "import_source": "",
         "import_date": "",
         "labels": {
@@ -604,14 +706,14 @@
             "no_terms": "No guild",
             "name_field_description": "",
             "slug_field_description": "",
-            "desc_field_description": "",
+            "desc_field_description": "eg. rodent, canine, beetles",
             "items_list_navigation": "Guild list navigation",
             "items_list": "Guild list",
             "back_to_items": "← Go to guild",
             "item_link": "Guilds Link",
             "item_link_description": "A link to a guilds"
         },
-        "description": "",
+        "description": "e.g. rodent, beetle, lizard",
         "capabilities": {
             "manage_terms": "manage_categories",
             "edit_terms": "manage_categories",
