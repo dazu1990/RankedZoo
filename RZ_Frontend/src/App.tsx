@@ -18,10 +18,10 @@ import {Navbar} from './components/navbar';
 
 
 const App = () => {
-  const jwtToken = useJwtAuth()
-  if(jwtToken) {
-    console.log('jwtToken - init', jwtToken)
-  };
+  // const jwtToken = useJwtAuth()
+  // if(jwtToken) {
+  //   console.log('jwtToken - init', jwtToken)
+  // };
 
 
 

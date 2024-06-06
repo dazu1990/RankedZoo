@@ -3,12 +3,13 @@ import axios from 'axios';
 
 export const useJwtAuth = () => {
   const [token, setToken] = useState<string | null>(null);
-  const username = 'testposter';
-  const password = 'y7C85zlYg7O6IfOxwLszOsnZ';
+  const username = 'admin';
+  const password = 'password';
+  // const password = 'Fn4g(wbDroE@Na@S7@Cvvqi4';
 
   const localToken = window.localStorage.getItem("jwtToken")
 
-  
+  // localStorage.clear();
 
   useEffect(() => {
     const authenticate = async () => {

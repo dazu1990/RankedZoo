@@ -19,17 +19,21 @@ interface AnimalGridCardProps {
 
 
 export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
+    const [sendUpdate] = useUpdateAnimalRank();
 
     const token = useJwtAuth()
 
     const [rank, setRank] = useState<number>(props.current_rank);
+    const [overallRank] = useState<number>(props.current_rank);
+    const [updateRankIncrement, setUpdateRankIncrement] = useState<number>(1);
 
 
+    const handleUpdateRank = (increment: number) => {
+        console.log('increment is ', increment)
+        sendUpdate(props.id, props.name, updateRankIncrement, token);
+        setRank(rank + increment);
+    };
 
-    const updateRankIncrement = 1;
-    useUpdateAnimalRank(props.id, rank, updateRankIncrement, token);
-
-  
 
     return (
         <div className="max-w-md  overflow-hidden shadow-lg">
@@ -40,18 +44,37 @@ export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
 
                 </div>
             )}
+              
             {!props.image && (
             <div className="w-full h-52 bg-gray-300"></div>
             )}
-            
             
             {/* <img className="w-full" src={props.animal.image} alt={props.animal.name} /> */}
             <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2">{props.name}</div>
                 <p className="text-gray-700 text-base">
                     {props.description}
+                    props rank: {overallRank} 
+                    {/* new reank: {newRank} */}
+                    <br></br>
+                    state rank: {rank}
                 </p>
             </div>
+            <div className='flex w-full justify-between'>
+                <button 
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={()=>handleUpdateRank(-updateRankIncrement)}
+                >
+                    -
+                </button>
+                <button 
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={()=>handleUpdateRank(updateRankIncrement)}
+                >
+                    +
+                </button>
+            </div>
+           
 
             {/* <div>
                 <button onClick={()=>setRank(rank+1)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
