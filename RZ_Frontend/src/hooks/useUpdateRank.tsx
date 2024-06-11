@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export const useUpdateAnimalRank = () => {
@@ -10,47 +9,36 @@ export const useUpdateAnimalRank = () => {
     token: string | null,
     vsAnimalId?: number | null,
   ) => {
-    const [post, setPost] = await useState(null);
-    const [error, setError] = await useState<unknown>(null);
+    const updateAnimalRank = async ()  => {
   
-    useEffect(() => {
-      const updateAnimalRank = async ()  => {
-        if(!token || !rankUpdate) {
-          setError(`useUpdateAnimalRank - no token or Rank Increment is 0 ${token} ${rankUpdate}`);
+      try {
+        const response = await axios.post(`http://localhost:8888/wp-json/wp/v2/rank-change-record`, 
+          { 
+            title: `${animalName} [${postId}] :: ${rankUpdate} :: ${Date()} ${vsAnimalId ? `vs ${vsAnimalId}` : ''}`,
+            status: 'publish',
+            acf: {
+              animal: postId,
+              value: rankUpdate,
+              vsAnimalId: vsAnimalId
+            }
 
-        } else {
-          try {
-            const response = await axios.post(`http://localhost:8888/wp-json/wp/v2/rank-change-record`, 
-              { 
-                title: `${animalName} [${postId}] :: ${rankUpdate} :: ${Date()} ${vsAnimalId ? `vs ${vsAnimalId}` : ''}`,
-                status: 'publish',
-                acf: {
-                  animal: postId,
-                  value: rankUpdate,
-                  vsAnimalId: vsAnimalId
-                }
-  
-              },
-              { headers: { 'Authorization': `Bearer ${token}` } }
-            );
-            setPost(response.data);
-            console.log('useUpdateAnimalRank', rankUpdate , response.data);
-            // console.log('useUpdateAnimalRank - expected , response', rankUpdate , response.data);
-  
-          } catch (error) {
-            console.log(error);
-            setError(error);
-          }
-        }
-        
-      };
-  
-      if (token) {
-        updateAnimalRank();
+          },
+          { headers: { 'Authorization': `Bearer ${token}` } }
+        );
+
+        return response.data;
+
+      } catch (error) {
+        console.error(error);
       }
-    }, [postId, rankUpdate, animalName, token]);
-  
-    return { post, error };
+    
+    };
+
+    if (token) {
+      await updateAnimalRank();
+    } else {
+      console.error('no jwt token');
+    }
   };
 
   return [sendUpdate];

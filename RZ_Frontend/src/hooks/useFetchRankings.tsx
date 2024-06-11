@@ -7,8 +7,9 @@ export const useFetchRankings = () => {
   useEffect(() => {
     const fetchRankings = async () => {
       try {
-        const response = await axios.get('http://localhost:8888/?rest_route=/wp/v2/rank-change-record/');
+        const response = await axios.get('http://localhost:8888/?rest_route=/wp/v2/rank-change-record&per_page=100');
         setRankings(response.data);
+        console.log('Rankings:', response);
       } catch (error) {
         console.error(error);
       }

@@ -9,27 +9,31 @@ interface AnimalGridProps  {
 }
 
 export const AnimalGrid = ({animals, rankings}: AnimalGridProps) => {
-    console.log('aniamals', animals, rankings
-     )
-     const [filteredAnimals, setFilteredAnimals ] = useState(animals)
+
+     const [filteredAnimals, setFilteredAnimals ] = useState<any[]>(animals)
 
      const filteredAnimalsWithRankings = filteredAnimals.map((animal: any) => {
         if (rankings) {
-            const ranking = rankings.find((ranking: any) => ranking.acf.animal === animal.id)
-            console.log('ranking', ranking)
+            const allRankings = rankings.filter((ranking: any) => ranking.acf.animal === animal.id).map((ranking: any) => ranking.acf.value)
+            console.log('allRankings for ', animal.title.rendered, allRankings)
+            
+            const overallRank = allRankings.reduce((acc, obj) => { return acc + obj; }, 0)
+
             return {
                 ...animal,
-                ranking: ranking
+                allRankings: allRankings,
+                overallRank: overallRank
             }
         }
         return {
             ...animal,
-            ranking: []
+            allRankings: [],
+            overallRank: 0
         }  
      });
 
      console.log('filteredAnimalsWithRankings', filteredAnimalsWithRankings)
-    const renderAnimalCards = filteredAnimals.map((animal: any, index: number) => {
+    const renderAnimalCards = filteredAnimalsWithRankings.map((animal: any, index: number) => {
         return (
             <div className="w-1/4 p-4" key={`${index + Math.random()}_animal_grid_card_wrapper`}>
                 <AnimalGridCard 
@@ -37,9 +41,8 @@ export const AnimalGrid = ({animals, rankings}: AnimalGridProps) => {
                     key={animal.id} 
                     name={animal.title.rendered} 
                     description={animal.description} 
-                    current_rank={animal.acf.overall_rank || 0}
+                    current_rank={animal.overallRank || 0}
                     image={animal.acf.hero_image || null}
-                    // updateRank={()=>updateRank(id, current_rank, 1, token)}
                 />
             </div>
         )

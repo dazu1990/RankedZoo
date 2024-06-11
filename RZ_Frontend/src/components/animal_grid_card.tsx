@@ -19,6 +19,7 @@ interface AnimalGridCardProps {
 
 
 export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
+
     const [sendUpdate] = useUpdateAnimalRank();
 
     const token = useJwtAuth()
@@ -30,7 +31,7 @@ export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
 
     const handleUpdateRank = (increment: number) => {
         console.log('increment is ', increment)
-        sendUpdate(props.id, props.name, updateRankIncrement, token);
+        sendUpdate(props.id, props.name, increment, token);
         setRank(rank + increment);
     };
 
@@ -61,6 +62,7 @@ export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
                 </p>
             </div>
             <div className='flex w-full justify-between'>
+                
                 <button 
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={()=>handleUpdateRank(-updateRankIncrement)}
