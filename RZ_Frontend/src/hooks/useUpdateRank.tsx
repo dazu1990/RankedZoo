@@ -29,6 +29,8 @@ export const useUpdateAnimalRank = () => {
         return response.data;
 
       } catch (error) {
+        console.log('updateAnimalRank:', error, postId, animalName, rankUpdate, token, vsAnimalId);
+
         console.error(error);
       }
     

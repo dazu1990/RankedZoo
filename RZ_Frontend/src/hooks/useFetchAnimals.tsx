@@ -7,8 +7,13 @@ export const useFetchAnimals = () => {
   useEffect(() => {
     const fetchAnimals = async () => {
       try {
-        // const response = await axios.get('http://localhost:8889?rest_route=/animals/animals');
-        const response = await axios.get('http://localhost:8888/?rest_route=/wp/v2/animal/');
+        const response = await axios.get('http://localhost:8888/wp-json/rz/v1/animals');
+        // format the all_rankings object into an array
+        response.data.forEach((animal: any) => {
+          animal.all_rankings = Object.keys(animal.all_rankings).map((key: string) => {
+            return animal.all_rankings[key]
+          });
+        });
         setAnimals(response.data);
       } catch (error) {
         console.error(error);
@@ -16,7 +21,6 @@ export const useFetchAnimals = () => {
     };
     const fetchRoutes = async () => {
       try {
-        // const response = await axios.get('http://localhost:8889?rest_route=/animals/animals');
         const response = await axios.get('http://localhost:8888/?rest_route=/wp/v2/');
         console.log('routes', response.data)
       } catch (error) {

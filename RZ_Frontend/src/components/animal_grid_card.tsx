@@ -2,6 +2,7 @@ import React , {useCallback, useEffect, useState} from 'react';
 import { useFetchAnimal } from '../hooks/useFetchAnimal';
 import { useJwtAuth } from '../hooks/useJwtAuth';
 import { useUpdateAnimalRank } from '../hooks/useUpdateRank';
+import { roundToTwo } from '../util';
 
 
 
@@ -12,6 +13,8 @@ interface AnimalGridCardProps {
     image?: string,
     current_rank: number,
     jwtToken?: string | null,
+    rankingsCount: number,
+    rankingSum: number,
     // updateRank: () => void,
 
 }
@@ -25,14 +28,18 @@ export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
     const token = useJwtAuth()
 
     const [rank, setRank] = useState<number>(props.current_rank);
-    const [overallRank] = useState<number>(props.current_rank);
+    const [overallRank,setOverallRank] = useState<number>(props.current_rank);
     const [updateRankIncrement, setUpdateRankIncrement] = useState<number>(1);
 
 
     const handleUpdateRank = (increment: number) => {
-        console.log('increment is ', increment)
+
         sendUpdate(props.id, props.name, increment, token);
-        setRank(rank + increment);
+
+        const newRank = roundToTwo((props.rankingSum + increment) / (props.rankingsCount + 1));
+        setOverallRank(newRank)
+
+        setRank(newRank);
     };
 
 
@@ -54,26 +61,48 @@ export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
             <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2">{props.name}</div>
                 <p className="text-gray-700 text-base">
-                    {props.description}
-                    props rank: {overallRank} 
-                    {/* new reank: {newRank} */}
+                    props rank: {roundToTwo(overallRank)}
                     <br></br>
-                    state rank: {rank}
+                    state rank: {roundToTwo(rank)}
                 </p>
             </div>
             <div className='flex w-full justify-between'>
                 
                 <button 
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={()=>handleUpdateRank(-updateRankIncrement)}
+                    onClick={()=>handleUpdateRank(0)}
                 >
-                    -
+                    0
                 </button>
                 <button 
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={()=>handleUpdateRank(updateRankIncrement)}
+                    onClick={()=>handleUpdateRank(1)}
                 >
-                    +
+                    1
+                </button>
+                <button 
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={()=>handleUpdateRank(2)}
+                >
+                    2
+                </button>
+                <button 
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={()=>handleUpdateRank(3)}
+                >
+                    3
+                </button>
+                <button 
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={()=>handleUpdateRank(4)}
+                >
+                    4
+                </button>
+                <button 
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={()=>handleUpdateRank(5)}
+                >
+                    5
                 </button>
             </div>
            
