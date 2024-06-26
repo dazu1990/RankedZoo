@@ -1,5 +1,8 @@
 import React , {useCallback, useEffect, useState} from 'react';
+import { useDrag } from 'react-dnd'
+
 import { useFetchAnimal } from '../hooks/useFetchAnimal';
+
 import { useJwtAuth } from '../hooks/useJwtAuth';
 import { useUpdateAnimalRank } from '../hooks/useUpdateRank';
 import { roundToTwo } from '../util';
@@ -44,74 +47,68 @@ export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
 
 
     return (
-        <div className="max-w-md  overflow-hidden shadow-lg">
+        <div className="max-w-md  overflow-hidden shadow-lg relative">
             {/* //create a placeholder compoent for the image with tailwind */}
             {props.image && (
-                <div className="w-full  bg-gray-300">
+                <div className="w-full  bg-gray-300 z-1 relative">
                     <img className="min-h-52 object-cover" src={props.image} alt={props.name} />
 
                 </div>
             )}
               
             {!props.image && (
-            <div className="w-full h-52 bg-gray-300"></div>
+            <div className="w-full h-52 bg-gray-300 z-1 relative"></div>
             )}
             
-            {/* <img className="w-full" src={props.animal.image} alt={props.animal.name} /> */}
-            <div className="px-6 py-4">
+
+            <div className="px-6 py-4 z-0 absolute top-0 w-full">
                 <div className="font-bold text-xl mb-2">{props.name}</div>
                 <p className="text-gray-700 text-base">
                     props rank: {roundToTwo(overallRank)}
                     <br></br>
                     state rank: {roundToTwo(rank)}
                 </p>
-            </div>
-            <div className='flex w-full justify-between'>
-                
-                <button 
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={()=>handleUpdateRank(0)}
-                >
-                    0
-                </button>
-                <button 
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={()=>handleUpdateRank(1)}
-                >
-                    1
-                </button>
-                <button 
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={()=>handleUpdateRank(2)}
-                >
-                    2
-                </button>
-                <button 
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={()=>handleUpdateRank(3)}
-                >
-                    3
-                </button>
-                <button 
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={()=>handleUpdateRank(4)}
-                >
-                    4
-                </button>
-                <button 
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={()=>handleUpdateRank(5)}
-                >
-                    5
-                </button>
-            </div>
+                <div className='flex w-full justify-between'>
+                    
+                    <button 
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                        onClick={()=>handleUpdateRank(0)}
+                    >
+                        0
+                    </button>
+                    <button 
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                        onClick={()=>handleUpdateRank(1)}
+                    >
+                        1
+                    </button>
+                    <button 
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                        onClick={()=>handleUpdateRank(2)}
+                    >
+                        2
+                    </button>
+                    <button 
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                        onClick={()=>handleUpdateRank(3)}
+                    >
+                        3
+                    </button>
+                    <button 
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                        onClick={()=>handleUpdateRank(4)}
+                    >
+                        4
+                    </button>
+                    <button 
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                        onClick={()=>handleUpdateRank(5)}
+                    >
+                        5
+                    </button>
+                </div>
            
-
-            {/* <div>
-                <button onClick={()=>setRank(rank+1)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Rank: {rank}
-                </button>
-            </div> */}
+            </div>
         </div>
     )
 };

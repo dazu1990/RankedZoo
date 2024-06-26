@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AnimalGridCard } from './animal_grid_card';
 import { useFetchAnimal } from '../hooks/useFetchAnimal';
 import  { RANK_VALUES } from '../constants';
+import {percentile} from '../util';
 
 
 interface AnimalGridProps  {
@@ -16,16 +17,15 @@ type rankedAnimalsType = {
 export const AnimalGrid = ({animals, rankings}: AnimalGridProps) => {
 
     const [filteredAnimals, setFilteredAnimals ] = useState<any[]>(animals);
-
-    console.log('filteredAnimalsWithRankings', filteredAnimals)
+      
 
     const generateRankingPercentileForAnimals =  (animals : any[]) => {
+        const justOverallRanks = animals.map(animal => animal.overall_average_rank);
         // add rankingPercentile to animals
         const animalsWithPercentile = animals.map(animal => {
-
-            const animalsWithLowerRank = animals.filter(a => a.overall_average_rank < animal.overall_average_rank);
-
-            const rankingPercentile = (animalsWithLowerRank.length / animals.length) * 100;
+        
+            const rankingPercentile = percentile(justOverallRanks, animal.overall_average_rank);
+            console.log('rankingPercentile', rankingPercentile, animal.post_title);
 
             return {
                 ...animal,
@@ -47,33 +47,38 @@ export const AnimalGrid = ({animals, rankings}: AnimalGridProps) => {
         F: []
     };
 
+   
+
     // rank animals by vote performance percentile
     const animalsWithPercentile = generateRankingPercentileForAnimals(filteredAnimals);
-    animalsWithPercentile.forEach(animal => {
-        RANK_VALUES.forEach(rankValue => {
+    
+    RANK_VALUES.forEach(rankValue => {
+        animalsWithPercentile.forEach(animal => {
+            // console.log('rankValue', rankValue.grade, rankValue.score, animal.rankingPercentile, animal.post_title);
+
             if(rankValue.grade === 'S' && animal.rankingPercentile >= rankValue.score) {
                 rankedAnimals[rankValue.grade].push(animal);
             }
-            if (animal.rankingPercentile >= rankValue.score && animal.rankingPercentile < RANK_VALUES[RANK_VALUES.indexOf(rankValue) - 1].score ){
+            if (rankValue.grade !== 'S' && rankValue.grade !== 'F' && animal.rankingPercentile >= rankValue.score && animal.rankingPercentile <= RANK_VALUES[RANK_VALUES.indexOf(rankValue) - 1].score ){
                 rankedAnimals[rankValue.grade].push(animal);
             }
             if(rankValue.grade === 'F' && animal.rankingPercentile <= rankValue.score) {
                 rankedAnimals[rankValue.grade].push(animal);
             }
         });
+        
     });
 
 
     console.log('rankedAnimals',rankedAnimals);
     
-
     return (
         <div className="w-full flex justify-items-center flex-wrap">
             {Object.keys(rankedAnimals).map((rank, index) => {
                 return (
-                    <div className="w-full" key={`${index + Math.random()}_ranked_animal_wrapper`}>
-                        <div className='flex'>{rank}</div>
-                        <div className="flex flex-wrap">
+                    <div className="w-full flex" key={`${index + Math.random()}_ranked_animal_wrapper`}>
+                        <div className={`flex w-1/12 justify-center items-center ${RANK_VALUES[index].bgColor}`}>{rank}</div>
+                        <div className={`flex w-11/12 flex-wrap ${RANK_VALUES[index].bgColorLight}`}>
                             {rankedAnimals[rank].map((animal, index) => {
                                 return (
                                     <div className="w-1/4 p-4" key={`${index + Math.random()}_ranked_animal_card_wrapper`}>
