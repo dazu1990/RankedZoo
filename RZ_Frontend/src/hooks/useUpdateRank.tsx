@@ -26,6 +26,7 @@ export const useUpdateAnimalRank = () => {
           { headers: { 'Authorization': `Bearer ${token}` } }
         );
 
+
         return response.data;
 
       } catch (error) {

@@ -6,10 +6,11 @@ import './index.css'
 import { Router } from "react-router";
 import { createBrowserHistory } from "history";
 
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <ChakraProvider>
         <App />
     </ChakraProvider>
-  </React.StrictMode>,
+  // </React.StrictMode>,
 )

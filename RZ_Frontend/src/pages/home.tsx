@@ -9,17 +9,16 @@ interface HomePageProps {
 export const HomePage = ({animals, rankings} : HomePageProps) => {
 
     return(
-        <div className="w-full flex items-center flex-col p-6">
-            <h1 className="text-3xl font-bold underline">
-                HOME
-            </h1>
-        
+        <div className="w-full flex items-center flex-col p-6 overflow-scroll">
+            HomePage
             {!animals && (
                 <div>Loading...</div>
             )}
 
             {animals && (
-                <AnimalGrid animals={animals} rankings={rankings}/>
+                <div className="w-full h-screenNoNav">
+                    <AnimalGrid animals={animals} />
+                </div>
             )}
         </div>
     )

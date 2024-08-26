@@ -9,7 +9,7 @@ export const useJwtAuth = () => {
 
   const localToken = window.localStorage.getItem("jwtToken")
 
-  // localStorage.clear();
+  localStorage.clear();
 
   useEffect(() => {
     const authenticate = async () => {

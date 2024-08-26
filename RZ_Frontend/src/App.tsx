@@ -2,12 +2,16 @@
 
 import React, { useState } from 'react';
 
+
 // import { Router, Route, Switch } from "react-router";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 // import { createBrowserHistory } from "history";
 import { useFetchAnimals, useJwtAuth, useFetchRankings } from './hooks';
+
+//import google fonts
+import './App.css';
 
 
 import {HomePage} from './pages/home';
@@ -23,13 +27,10 @@ const App = () => {
   //   console.log('jwtToken - init', jwtToken)
   // };
 
-
-
-
   const animals = useFetchAnimals();
   const allRankings = useFetchRankings();
-  console.log('animals _ data', animals)
-  console.log('rankings _ data', allRankings)
+  // console.log('animals _ data', animals)
+  // console.log('rankings _ data', allRankings)
 
   const navItems = [
     {

@@ -23,7 +23,7 @@ export const Navbar = ({navItems}: NavbarProps) => {
     })
 
     return (
-        <div className='fixed flex items-center justify-between flex-wrap bg-teal-500 p-6 w-full z-3'>
+        <div className='fixed flex items-center justify-between flex-wrap bg-teal-500 p-6 w-full z-10'>
             <nav className="flex items-center justify-between flex-wrap ">
                 {navButtons}
             </nav>
