@@ -2912,6 +2912,11 @@ swappy@^0.0.0:
   resolved "https://registry.yarnpkg.com/swappy/-/swappy-0.0.0.tgz#f51502f2c0538a9fbb0744e431be6fb3096ad0f7"
   integrity sha512-5gbyQw0gWqUelbkrFRdpzxiusgrTx4UMSqNdoGlj8E4qBq1T5KFKCb8a231eKsNypvxa6iNug7PePrW7wgbYbQ==
 
+swapy@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/swapy/-/swapy-0.1.1.tgz#0231307ce179c4b1c3dd1b20770424448524b6d0"
+  integrity sha512-iurSCHQnTgw3Jk663AFx9ZAcu5mFCUJvDBpN2aUn1U6Ec8zo8vlqtXDGLg7GH50zx5SdBf28DepKZMhw3TS1dw==
+
 tailwindcss@^3.3.3:
   version "3.3.3"
   resolved "https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.3.3.tgz"

@@ -74,7 +74,7 @@ export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
 
     return (
         <Draggable
-            draggableId={`draggable_animal_wrapper_${props.name}`}
+            draggableId={`draggableId_${props.id}`}
             index={props.cardIndex}
             key={`draggable_animal_wrapper_${props.name}`}
         >
@@ -104,8 +104,25 @@ export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
                         )}
                         
 
-                        <div className="px-6 py-4 z-0 absolute top-0 w-full transition-all opacity-25 hover:opacity-100">
-                            <div className={`font-bold text-l mb-2 ${RANK_VALUES[props.letterRankIndex].bgColorLight}`}>
+                        <div className={`
+                            z-0 
+                            absolute 
+                            top-0 
+                            w-full 
+                            transition-all 
+                            ${props.image ? `opacity-0` : `opacity-100`} 
+                            hover:opacity-100
+                            flex
+                            justify-center
+                            items-center
+                        `}>
+                            <div className={`
+                                font-bold 
+                                text-l 
+                                text-center 
+                                p-1 
+                                ${RANK_VALUES[props.letterRankIndex].bgColorLight}
+                            `}>
                                 {props.name}
                                 <br></br>
                                 {roundToTwo(rank)}

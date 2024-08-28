@@ -11,7 +11,7 @@ interface AnimalRowProps  {
 
 export const AnimalRow = ({animals, rank, rankIndex} : AnimalRowProps)=>{
     return(
-        <div className="w-full flex h-gridRow" key={`row_wrapper_${rank}`}>
+        <div className="w-full flex min-h-gridRow m-2" key={`row_wrapper_${rank}`}>
             <div className={`
                 flex w-1/12 
                 justify-center 

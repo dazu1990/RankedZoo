@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 
 import { AnimalGridCard } from './animal_grid_card';
@@ -75,39 +75,46 @@ export const AnimalGrid = ({animals}: AnimalGridProps) => {
         const { destination, source, draggableId } = result;
         if(!destination) return;
         // if(destination.droppableId === source.droppableId && destination.index === source.index) return;
-        console.log('rankedAnimals', rankedAnimals );
-        console.log('rankedAnimals C', rankedAnimals.C );
+
 
         
         const sourceRowRank = source.droppableId;
         const destinationRowRank = destination.droppableId;
-        console.log('sourceRowRank', sourceRowRank, 'destinationRowRank', destinationRowRank);
         const sameRow = sourceRowRank === destinationRowRank;
 
 
-        console.log('source index', source.index, 'destination index', destination.index);
         // const newRow = rankedAnimals[destinationRowRank].splice(destination.index, 0, rankedAnimals[sourceRowRank][source.index])
 
         // console.log('destination row after update', newRow);
 
         if (!sameRow) {
-            console.log('different row');
+
             // remove from source row
-            // const newSourceRow = rankedAnimals[sourceRowRank].filter((animal: any, index: number) => index !== source.index);
-            // console.log('new source row on different', newSourceRow);
-            // setRankedAnimals({...rankedAnimals, [sourceRowRank]: newSourceRow});
+            const saveSourceRow = rankedAnimals[sourceRowRank];
+            const saveDestinationRow = rankedAnimals[destinationRowRank];
+
+            const sourceRowWithout = saveSourceRow.filter((animal: any ) => `draggableId_${animal.ID}` != draggableId);
+
+            saveDestinationRow.splice(destination.index, 0, saveSourceRow[source.index]);
+
+            setRankedAnimals({...rankedAnimals, [sourceRowRank]: sourceRowWithout, [destinationRowRank]: saveDestinationRow});
+            
         } else {
-            console.log('same row');
-            const newSourceRow = rankedAnimals[sourceRowRank].splice(source.index, 1);
-            console.log('new source row on same', newSourceRow);
-            // setRankedAnimals({...rankedAnimals, [sourceRowRank]: newSourceRow});
+
+            
+            const saveRow = rankedAnimals[sourceRowRank];
+
+
+            const rowWithout = saveRow.filter((animal: any ) => `draggableId_${animal.ID}` != draggableId);
+
+            // insert into destination index
+            rowWithout.splice(destination.index, 0, saveRow[source.index]);
+            const newSourceRow = rowWithout;
+
+
+
+            setRankedAnimals({...rankedAnimals, [sourceRowRank]: newSourceRow});
         }
-
-        // setRankedAnimals({...rankedAnimals, [destinationRowRank]: newRow})
-
-
-        // const newRow = [...rankedAnimals[newRowRank], ];
-        // const newRankedAnimalsState = {};
     };
 
     const handleOnDragUpdate = (update: any) => {
@@ -184,12 +191,12 @@ export const AnimalGrid = ({animals}: AnimalGridProps) => {
 
     
     return (
-        // <DragDropContext 
-        //     // onDragStart={handleOnDragStart}
-        //     // onDragUpdate={handleOnDragUpdate}
-        //     onDragEnd={(r)=>handleOnDragEnd(r)}
-        //     // onDragEnd={handleOnDragEnd}
-        // >
+        <DragDropContext 
+            // onDragStart={handleOnDragStart}
+            // onDragUpdate={handleOnDragUpdate}
+            onDragEnd={(r)=>handleOnDragEnd(r)}
+            // onDragEnd={handleOnDragEnd}
+        >
             <div className="w-full h-screenNoNav flex justify-items-center flex-wrap">
                 {Object.keys(rankedAnimals).map((rank, index) => {
                     return (
@@ -197,7 +204,7 @@ export const AnimalGrid = ({animals}: AnimalGridProps) => {
                     )
                 })}
             </div>
-        // </DragDropContext>
+        </DragDropContext>
 
     )
 }

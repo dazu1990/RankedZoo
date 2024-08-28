@@ -11,7 +11,7 @@ interface AnimalRowListProps  {
 export const AnimalRowList = ({animals, rank, rankIndex} : AnimalRowListProps) => {
     return(
         <Droppable 
-                droppableId={`droppable-${rank}`}  
+                droppableId={`${rank}`}  
             >
             {(provided) => (
                 <div

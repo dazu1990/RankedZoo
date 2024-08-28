@@ -7,6 +7,11 @@ export default {
   ],
   theme: {
     extend: {
+      minHeight: {
+        navbar: "64px",
+        screenNoNav: "calc(100vh - 64px)",
+        gridRow: "calc((100vh - 64px)/6)",
+      },
       height: {
         navbar: "64px",
         screenNoNav: "calc(100vh - 64px)",
