@@ -1,6 +1,7 @@
 
 
 import React, { useState } from 'react';
+import { THEME } from './constants';
 
 
 // import { Router, Route, Switch } from "react-router";
@@ -34,7 +35,7 @@ const App = () => {
 
   const navItems = [
     {
-      name: 'Home',
+      name: 'Ranked Zoo',
       link: '/',
     },
     {
@@ -53,7 +54,7 @@ const App = () => {
   return (
     <div className="App">
       <Navbar navItems={navItems}/>
-      <div className='py-20 w-full flex justify-center border-2 border-black border-solid'>
+      <div className={`py-20 w-full flex justify-center`}>
       <BrowserRouter>
       <Routes>
 

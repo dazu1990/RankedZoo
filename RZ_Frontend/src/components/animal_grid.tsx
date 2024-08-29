@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-
+import { useUpdateAnimalRank } from '../hooks/useUpdateRank';
+import { useJwtAuth } from '../hooks/useJwtAuth';
 import { AnimalGridCard } from './animal_grid_card';
 import { AnimalRow } from './animal_row';
 import { useFetchAnimal } from '../hooks/useFetchAnimal';
@@ -20,6 +21,9 @@ type rankedAnimalsType = {
 
 
 export const AnimalGrid = ({animals}: AnimalGridProps) => {
+    const token = useJwtAuth();
+    const [sendUpdate] = useUpdateAnimalRank();
+
 
     const [filteredAnimals, setFilteredAnimals ] = useState<any[]>(animals);
     const [filteredAnimalsWithPercentile, setFilteredAnimalsWithPercentile] = useState<any[]>([]);
@@ -33,42 +37,27 @@ export const AnimalGrid = ({animals}: AnimalGridProps) => {
     });
 
     const [isOver, setIsOver] = useState<boolean>(false);
-    const [isDragging, setIsDragging] = useState<boolean>(false);
+    const [isDragging, setIsDragging] = useState<boolean>(false)   
 
-    // onDragEnd = result => {
-    //     const { destination, source, draggableId } = result;
     
-    //     if (!destination) {
-    //       return;
-    //     }
-    
-    //     if (
-    //       destination.droppableId === source.droppableId &&
-    //       destination.index === source.index
-    //     ) {
-    //       return;
-    //     }
-    
-    //     const column = this.state.columns[source.droppableId];
-    //     const newTaskIds = Array.from(column.taskIds);
-    //     newTaskIds.splice(source.index, 1);
-    //     newTaskIds.splice(destination.index, 0, draggableId);
-    
-    //     const newColumn = {
-    //       ...column,
-    //       taskIds: newTaskIds,
-    //     };
-    
-    //     const newState = {
-    //       ...this.state,
-    //       columns: {
-    //         ...this.state.columns,
-    //         [newColumn.id]: newColumn,
-    //       },
-    //     };
-    
-    //     this.setState(newState);
-    //   };            
+    const handleRankAnimal = (animal: any, newRank: string, oldRank: string) => {
+        console.log('animal', animal);
+        console.log('newRank', newRank);
+        console.log('oldRank', oldRank);
+
+        const newRankNumber = RANK_VALUES.find(rankValue => rankValue.grade === newRank)?.number;
+
+        if (!newRankNumber) return
+
+        sendUpdate(animal.ID, animal.post_title, newRankNumber, token);
+        const newAnimalIndex = rankedAnimals[newRank].indexOf(animal);
+        animal.locked = true;   
+        rankedAnimals[newRank].splice(newAnimalIndex, 1, animal);
+
+        console.log(rankedAnimals[newRank]);
+
+
+    };
 
     const handleOnDragEnd = (result: any) => {
         console.log('onDragEnd', result);
@@ -82,14 +71,11 @@ export const AnimalGrid = ({animals}: AnimalGridProps) => {
         const destinationRowRank = destination.droppableId;
         const sameRow = sourceRowRank === destinationRowRank;
 
+      
 
-        // const newRow = rankedAnimals[destinationRowRank].splice(destination.index, 0, rankedAnimals[sourceRowRank][source.index])
-
-        // console.log('destination row after update', newRow);
 
         if (!sameRow) {
 
-            // remove from source row
             const saveSourceRow = rankedAnimals[sourceRowRank];
             const saveDestinationRow = rankedAnimals[destinationRowRank];
 
@@ -98,6 +84,9 @@ export const AnimalGrid = ({animals}: AnimalGridProps) => {
             saveDestinationRow.splice(destination.index, 0, saveSourceRow[source.index]);
 
             setRankedAnimals({...rankedAnimals, [sourceRowRank]: sourceRowWithout, [destinationRowRank]: saveDestinationRow});
+
+            handleRankAnimal(rankedAnimals[destinationRowRank][destination.index], destinationRowRank, sourceRowRank);
+
             
         } else {
 
@@ -112,8 +101,9 @@ export const AnimalGrid = ({animals}: AnimalGridProps) => {
             const newSourceRow = rowWithout;
 
 
-
             setRankedAnimals({...rankedAnimals, [sourceRowRank]: newSourceRow});
+            handleRankAnimal(rankedAnimals[destinationRowRank][destination.index], destinationRowRank, sourceRowRank);
+
         }
     };
 
@@ -194,8 +184,8 @@ export const AnimalGrid = ({animals}: AnimalGridProps) => {
         <DragDropContext 
             // onDragStart={handleOnDragStart}
             // onDragUpdate={handleOnDragUpdate}
-            onDragEnd={(r)=>handleOnDragEnd(r)}
-            // onDragEnd={handleOnDragEnd}
+            // onDragEnd={(r)=>handleOnDragEnd(r)}
+            onDragEnd={handleOnDragEnd}
         >
             <div className="w-full h-screenNoNav flex justify-items-center flex-wrap">
                 {Object.keys(rankedAnimals).map((rank, index) => {

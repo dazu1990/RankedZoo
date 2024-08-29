@@ -31,6 +31,36 @@ interface AnimalGridCardProps {
     letterRank: string,
 }
 
+const class_CardTopLayer = (image : string | undefined) =>`
+    z-0 
+    absolute 
+    top-0 
+    w-full 
+    transition-all 
+    ${image ? `opacity-0` : `opacity-100`} 
+    hover:opacity-100
+    flex
+    justify-center
+    items-center
+    align-middle
+    h-full
+`
+
+const class_CardTopLayerTextWrapper = (letterRankIndex : number) => `
+    font-bold 
+    text-l 
+    text-center 
+    p-1 
+    w-full
+    bg-opacity-80	
+    h-full
+    flex
+    justify-center
+    align-middle
+    items-center
+    flex-col
+    ${RANK_VALUES[letterRankIndex].bgColorLight}
+`
 
 // function mapStateToProps(state) {
 //     return { props: state.props };
@@ -47,6 +77,8 @@ export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
     const [updateRankIncrement, setUpdateRankIncrement] = useState<number>(1);
     const [locked, setLocked] = useState<boolean>(props.locked);
     const [newRankCount, setNewRankCount] = useState<number>(0);
+
+    console.log('locked', locked, props.name);
 
    
 
@@ -87,9 +119,10 @@ export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
                     {...provided.dragHandleProps} 
                 >
                     <div className="w-full overflow-hidden  relative">
+                       
                         {locked && (
-                            <div className="top-1 right-1 z-10 absolute p10">
-                                <LockClosedIcon className="size-6 text-blue-500" />
+                            <div className="top-1 right-1 z-0 h-5 w-5 absolute">
+                                <LockClosedIcon className="size-6 text-black" />
                             </div>
                         )}
                         {props.image && (
@@ -104,29 +137,11 @@ export const AnimalGridCard = ( {...props} : AnimalGridCardProps) => {
                         )}
                         
 
-                        <div className={`
-                            z-0 
-                            absolute 
-                            top-0 
-                            w-full 
-                            transition-all 
-                            ${props.image ? `opacity-0` : `opacity-100`} 
-                            hover:opacity-100
-                            flex
-                            justify-center
-                            items-center
-                        `}>
-                            <div className={`
-                                font-bold 
-                                text-l 
-                                text-center 
-                                p-1 
-                                ${RANK_VALUES[props.letterRankIndex].bgColorLight}
-                            `}>
+                        <div className={class_CardTopLayer(props.image)}>
+                            <div className={class_CardTopLayerTextWrapper(props.letterRankIndex)}>
                                 {props.name}
                                 <br></br>
-                                {roundToTwo(rank)}
-
+                                {locked ? (<LockClosedIcon className="h-10 w-10 text-black" />) : roundToTwo(rank)}
                             </div>
                     
                             {/* <div className='flex w-full justify-between'>

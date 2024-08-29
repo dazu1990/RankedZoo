@@ -1,7 +1,7 @@
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { AnimalGridCard } from './animal_grid_card';
 import { RANK_VALUES } from '../constants';
-import { AnimalRowList } from './animal_row_list';
+import { AnimalRowContent } from './animal_row_content';
 
 interface AnimalRowProps  {
     animals: any[],
@@ -22,7 +22,7 @@ export const AnimalRow = ({animals, rank, rankIndex} : AnimalRowProps)=>{
             >
                 <h1>{rank}</h1>
             </div>
-            <AnimalRowList animals={animals} rank={rank} rankIndex={rankIndex}/>
+            <AnimalRowContent animals={animals} rank={rank} rankIndex={rankIndex}/>
             
         </div>
     )
